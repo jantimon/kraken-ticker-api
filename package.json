@@ -1,0 +1,44 @@
+{
+  "name": "kraken-ticker-api",
+  "version": "1.0.0",
+  "description": "get the kraken price for a given asset pair",
+  "scripts": {
+    "release": "standard-version",
+    "prepublishOnly": "npm run build",
+    "build": "tsc && tsc -p tsconfig.commonjs.json"
+  },
+  "files": [
+    "types.d.ts",
+    "dist/"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/esm/kraken-api-node.js",
+      "require": "./dist/commonjs/kraken-api-node.js",
+      "browser": "./dist/esm/kraken-api.js"
+    }
+  },
+  "main": "./dist/commonjs/kraken-api-node.js",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jantimon/kraken-ticker-api.git"
+  },
+  "keywords": [
+    "kraken"
+  ],
+  "author": "Jan Nicklas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jantimon/kraken-ticker-api/issues"
+  },
+  "homepage": "https://github.com/jantimon/kraken-ticker-api#readme",
+  "peerDependencies": {
+    "node-fetch": ">=2"
+  },
+  "devDependencies": {
+    "prettier": "^2.3.2",
+    "standard-version": "^9.3.0",
+    "typescript": "4.3.5"
+  }
+}
