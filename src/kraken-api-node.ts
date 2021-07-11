@@ -30,15 +30,26 @@ export const getAssetPairTickerOriginal = async <TKeys extends string>(
  * @code
  * ```
  * const bitcoin = getAssetPairTicker('XBTUSD');
- * const bitcoinEth = getAssetPairTicker('XBTUSD', 'XETHXXBT');
  * ```
  */
-export const getAssetPairTicker = async <TKeys extends string>(
+export const getAssetPairTicker = async (pair: string) =>
+  (await getAssetPairsTicker(pair))[pair];
+
+/**
+ * Get multiple asset pairs result in a signgle request
+ *
+ * @code
+ * ```
+ * const bitcoinEth = getAssetPairsTicker('XBTUSD', 'XETHXXBT');
+ * console.log(bitcoinEth.XBTUSD);
+ * ```
+ */
+export const getAssetPairsTicker = async <TKeys extends string>(
   ...pairs: TKeys[]
 ) => {
   const response = await getAssetPairTickerOriginal(...pairs);
-  return {
-    error: response.error,
-    result: convertToObjectNotation(response.result),
-  };
+  if (response.error && response.error.length) {
+    return Promise.reject(response.error);
+  }
+  return convertToObjectNotation(response.result);
 };

@@ -10,11 +10,16 @@ npm i kraken-ticker-api node-fetch
 
 ## Get Ticker Information
 
+Get the latest ticker stats for an asset.  
+The latest asset names can be retrieved from https://api.kraken.com/0/public/AssetPairs
+
 ```ts
-import { getAssetPairTicker } from "kraken-ticker-api";
+import { getAssetPairTicker, getAssetPairsTicker } from "kraken-ticker-api";
 
 console.log(await getAssetPairTicker('XBTUSD'));
-console.log(await getAssetPairTicker('XBTUSD', 'XETHXXBT'));
+
+// Fetch multiple assets with a single request
+console.log(await getAssetPairsTicker('XBTUSD', 'XETHXXBT'));
 ```
 
 ## Ticker Response
