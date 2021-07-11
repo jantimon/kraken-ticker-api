@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import { convertToObjectNotation } from "./pairConversion";
+import { PublicTickerResponse } from "./response-types";
 
 /**
  * Get current original kraken asset pairs result
@@ -10,14 +11,16 @@ import { convertToObjectNotation } from "./pairConversion";
  * const bitcoinEth = getAssetPairTickerOriginal('XBTUSD', 'XETHXXBT');
  * ```
  */
-export const getAssetPairTickerOriginal = async (...pairs: string[]) => {
+export const getAssetPairTickerOriginal = async <TKeys extends string>(
+  ...pairs: TKeys[]
+) => {
   const request = await fetch(
     "https://api.kraken.com/0/public/Ticker?pair=" + pairs.join(",")
   );
   const response = await request.text();
   return JSON.parse(response.replace(/\%$/, "")) as {
     error: string[];
-    result: { [key: string]: import("../types").PublicTickerResponse };
+    result: { [key in TKeys]: PublicTickerResponse };
   };
 };
 
@@ -30,8 +33,10 @@ export const getAssetPairTickerOriginal = async (...pairs: string[]) => {
  * const bitcoinEth = getAssetPairTicker('XBTUSD', 'XETHXXBT');
  * ```
  */
-export const getAssetPairTicker = async (...pairs: string[]) => {
-  const response = await module.exports.getAssetPairTickerOriginal(pairs);
+export const getAssetPairTicker = async <TKeys extends string>(
+  ...pairs: TKeys[]
+) => {
+  const response = await getAssetPairTickerOriginal(...pairs);
   return {
     error: response.error,
     result: convertToObjectNotation(response.result),

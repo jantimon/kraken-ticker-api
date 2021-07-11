@@ -5,7 +5,8 @@
   "scripts": {
     "release": "standard-version",
     "prepublishOnly": "npm run build",
-    "build": "tsc && tsc -p tsconfig.commonjs.json"
+    "build": "tsc && tsc -p tsconfig.commonjs.json",
+    "prettier": "prettier --write src/*.ts"
   },
   "files": [
     "types.d.ts",
@@ -37,6 +38,8 @@
     "node-fetch": ">=2"
   },
   "devDependencies": {
+    "@types/node-fetch": "^2.5.11",
+    "node-fetch": "2.6.1",
     "prettier": "^2.3.2",
     "standard-version": "^9.3.0",
     "typescript": "4.3.5"
